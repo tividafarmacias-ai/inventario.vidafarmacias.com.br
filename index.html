@@ -33,14 +33,61 @@
             border-radius: 20px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            padding: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Navegação por Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* Header */
         .header {
-            margin-bottom: 20px;
             text-align: center;
+            padding: 20px 20px 0 20px;
         }
 
         h1 {
@@ -57,40 +104,125 @@
             justify-content: center;
         }
 
-        h1 i {
-            font-size: 1.5rem;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #667eea;
-        }
-
         .subtitle {
             color: #a0a0c0;
             font-size: 0.8rem;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        /* Dashboard */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(30, 30, 50, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #a0a0c0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            background: rgba(30, 30, 50, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-distribution {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .status-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: #a0a0c0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
         }
 
         /* Formulário */
         .form-section {
             background: rgba(30, 30, 50, 0.6);
             backdrop-filter: blur(5px);
-            padding: 16px;
+            padding: 20px;
             border-radius: 16px;
-            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .form-section:hover {
-            border-color: rgba(102, 126, 234, 0.5);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .form-section h2 {
             color: #667eea;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             font-size: 1.2rem;
             font-weight: 600;
             display: flex;
@@ -102,7 +234,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -144,16 +276,6 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
 
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #606080;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
         .checkbox-group {
             flex-direction: row;
             align-items: center;
@@ -178,7 +300,6 @@
         .button-group {
             display: flex;
             gap: 10px;
-            margin-top: 16px;
             flex-direction: column;
         }
 
@@ -196,7 +317,6 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            -webkit-tap-highlight-color: transparent;
         }
 
         button:active {
@@ -209,20 +329,10 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
         .btn-secondary {
             background: rgba(108, 117, 125, 0.3);
             color: #e0e0e0;
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(108, 117, 125, 0.5);
-            transform: translateY(-2px);
         }
 
         .btn-danger {
@@ -230,24 +340,14 @@
             color: white;
         }
 
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-        }
-
         .btn-warning {
             background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
             color: #1a1a2e;
         }
 
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-        }
-
         .btn-icon {
             padding: 8px 12px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         /* Cards para mobile */
@@ -264,7 +364,6 @@
             padding: 14px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            animation: fadeIn 0.3s ease-out;
         }
 
         .computer-card:hover {
@@ -316,10 +415,6 @@
             color: #b0b0d0;
         }
 
-        .card-info span:first-child {
-            font-size: 0.9rem;
-        }
-
         .card-actions {
             display: flex;
             gap: 8px;
@@ -329,7 +424,7 @@
         .card-actions button {
             flex: 1;
             padding: 8px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         /* Tabela para desktop */
@@ -337,16 +432,6 @@
             overflow-x: auto;
             border-radius: 16px;
             background: rgba(30, 30, 50, 0.4);
-        }
-
-        .table-container h2 {
-            color: #667eea;
-            margin-bottom: 16px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .desktop-table {
@@ -361,7 +446,6 @@
 
         thead {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-            backdrop-filter: blur(5px);
         }
 
         th, td {
@@ -387,7 +471,6 @@
             background: rgba(102, 126, 234, 0.1);
         }
 
-        /* Badges */
         .badge {
             padding: 4px 10px;
             border-radius: 20px;
@@ -418,7 +501,6 @@
             white-space: nowrap;
         }
 
-        /* Loading e Empty State */
         .loading, .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -430,38 +512,13 @@
             color: #8080a0;
         }
 
-        /* Scrollbar personalizada */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 30, 50, 0.5);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-        }
-
-        /* Responsividade */
         @media (min-width: 768px) {
             body {
                 padding: 20px;
             }
 
-            .container {
-                padding: 24px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .form-section {
-                padding: 24px;
+            .tab-content {
+                padding: 30px;
             }
 
             .form-grid {
@@ -479,16 +536,12 @@
                 padding: 12px 28px;
             }
 
-            .mobile-cards {
-                display: none;
-            }
-
             .desktop-table {
                 display: block;
             }
 
-            .card-actions button {
-                width: auto;
+            .dashboard-stats {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -497,16 +550,15 @@
                 display: none;
             }
             
-            .mobile-cards {
-                display: block;
-            }
-            
             .table-container {
                 overflow: visible;
             }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
-        /* Animações */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -518,27 +570,6 @@
             }
         }
 
-        .container {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* Estilo para inputs number */
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            opacity: 0.5;
-        }
-
-        /* Focus visible para acessibilidade */
-        *:focus-visible {
-            outline: 2px solid #667eea;
-            outline-offset: 2px;
-        }
-
-        /* Melhorias para touch */
         @media (hover: none) and (pointer: coarse) {
             button {
                 min-height: 44px;
@@ -560,110 +591,155 @@
             <div class="subtitle">Inventário de Computadores - Controle completo de equipamentos</div>
         </div>
 
-        <!-- Formulário de Cadastro/Edição -->
-        <div class="form-section">
-            <h2>
-                <span id="formIcon">➕</span>
-                <span id="formTitle">Adicionar Computador</span>
-            </h2>
-            <form id="computerForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Nome do Equipamento *</label>
-                        <input type="text" id="nome" required placeholder="Ex: PC-01 - Financeiro">
-                    </div>
-                    <div class="form-group">
-                        <label>Usuário Responsável *</label>
-                        <input type="text" id="usuario" required placeholder="Nome do usuário">
-                    </div>
-                    <div class="form-group">
-                        <label>CPU / Processador *</label>
-                        <input type="text" id="cpu" required placeholder="Ex: Intel i7-10700">
-                    </div>
-                    <div class="form-group">
-                        <label>GPU / Placa de Vídeo</label>
-                        <input type="text" id="gpu" placeholder="Ex: NVIDIA GTX 1660">
-                    </div>
-                    <div class="form-group">
-                        <label>Sistema Operacional *</label>
-                        <input type="text" id="sistema" required placeholder="Ex: Windows 11 Pro">
-                    </div>
-                    <div class="form-group">
-                        <label>Versão do SO</label>
-                        <input type="text" id="versao" placeholder="Ex: 22H2">
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo *</label>
-                        <select id="tipo" required>
-                            <option value="desktop">🖥️ Desktop</option>
-                            <option value="notebook">💻 Notebook</option>
-                        </select>
-                    </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="possuiBackup">
-                        <label>💾 Possui Backup Ativo?</label>
-                    </div>
-                    <div class="form-group">
-                        <label>Número de Série</label>
-                        <input type="text" id="numeroSerie" placeholder="Número de série do equipamento">
-                    </div>
-                    <div class="form-group">
-                        <label>Memória RAM (GB)</label>
-                        <input type="number" id="ram" placeholder="Ex: 16">
-                    </div>
-                    <div class="form-group">
-                        <label>Armazenamento</label>
-                        <input type="text" id="armazenamento" placeholder="Ex: 512GB SSD">
-                    </div>
-                    <div class="form-group">
-                        <label>Data de Aquisição</label>
-                        <input type="date" id="dataAquisicao">
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="status">
-                            <option value="ativo">🟢 Ativo</option>
-                            <option value="manutencao">🔧 Em Manutenção</option>
-                            <option value="inativo">🔴 Inativo</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Observações</label>
-                        <textarea id="observacoes" placeholder="Informações adicionais..."></textarea>
-                    </div>
-                </div>
-                <div class="button-group">
-                    <button type="submit" class="btn-primary" id="submitBtn">
-                        <span>💾</span> Salvar Computador
-                    </button>
-                    <button type="button" class="btn-secondary" id="cancelBtn" style="display: none;">
-                        <span>❌</span> Cancelar Edição
-                    </button>
-                </div>
-            </form>
+        <!-- Navegação por Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-tab="cadastro">➕ Cadastro</button>
+            <button class="tab-btn" data-tab="listagem">📋 Listagem</button>
         </div>
 
-        <!-- Lista de Computadores -->
-        <div class="table-container">
-            <h2>
-                <span>📋</span>
-                Lista de Equipamentos
-            </h2>
-            <div id="computersList">
-                <div class="loading">🔄 Carregando equipamentos...</div>
+        <!-- Tab Dashboard -->
+        <div class="tab-content active" id="dashboard">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🖥️</div>
+                    <div class="stat-value" id="totalEquipamentos">0</div>
+                    <div class="stat-label">Total de Equipamentos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💻</div>
+                    <div class="stat-value" id="totalNotebooks">0</div>
+                    <div class="stat-label">Notebooks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🖥️</div>
+                    <div class="stat-value" id="totalDesktops">0</div>
+                    <div class="stat-label">Desktops</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-value" id="totalBackup">0</div>
+                    <div class="stat-label">Com Backup Ativo</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">
+                    <span>📊</span> Status dos Equipamentos
+                </div>
+                <div class="status-distribution" id="statusDistribution"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">
+                    <span>📈</span> Resumo Rápido
+                </div>
+                <div id="quickSummary"></div>
+            </div>
+        </div>
+
+        <!-- Tab Cadastro -->
+        <div class="tab-content" id="cadastro">
+            <div class="form-section">
+                <h2>
+                    <span id="formIcon">➕</span>
+                    <span id="formTitle">Adicionar Computador</span>
+                </h2>
+                <form id="computerForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome do Equipamento *</label>
+                            <input type="text" id="nome" required placeholder="Ex: PC-01 - Financeiro">
+                        </div>
+                        <div class="form-group">
+                            <label>Usuário Responsável *</label>
+                            <input type="text" id="usuario" required placeholder="Nome do usuário">
+                        </div>
+                        <div class="form-group">
+                            <label>CPU / Processador *</label>
+                            <input type="text" id="cpu" required placeholder="Ex: Intel i7-10700">
+                        </div>
+                        <div class="form-group">
+                            <label>GPU / Placa de Vídeo</label>
+                            <input type="text" id="gpu" placeholder="Ex: NVIDIA GTX 1660">
+                        </div>
+                        <div class="form-group">
+                            <label>Sistema Operacional *</label>
+                            <input type="text" id="sistema" required placeholder="Ex: Windows 11 Pro">
+                        </div>
+                        <div class="form-group">
+                            <label>Versão do SO</label>
+                            <input type="text" id="versao" placeholder="Ex: 22H2">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select id="tipo" required>
+                                <option value="desktop">🖥️ Desktop</option>
+                                <option value="notebook">💻 Notebook</option>
+                            </select>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="possuiBackup">
+                            <label>💾 Possui Backup Ativo?</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Série</label>
+                            <input type="text" id="numeroSerie" placeholder="Número de série do equipamento">
+                        </div>
+                        <div class="form-group">
+                            <label>Memória RAM (GB)</label>
+                            <input type="number" id="ram" placeholder="Ex: 16">
+                        </div>
+                        <div class="form-group">
+                            <label>Armazenamento</label>
+                            <input type="text" id="armazenamento" placeholder="Ex: 512GB SSD">
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Aquisição</label>
+                            <input type="date" id="dataAquisicao">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="status">
+                                <option value="ativo">🟢 Ativo</option>
+                                <option value="manutencao">🔧 Em Manutenção</option>
+                                <option value="inativo">🔴 Inativo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Observações</label>
+                            <textarea id="observacoes" placeholder="Informações adicionais..."></textarea>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span>💾</span> Salvar Computador
+                        </button>
+                        <button type="button" class="btn-secondary" id="cancelBtn" style="display: none;">
+                            <span>❌</span> Cancelar Edição
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tab Listagem -->
+        <div class="tab-content" id="listagem">
+            <div class="table-container">
+                <div id="computersList">
+                    <div class="loading">🔄 Carregando equipamentos...</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuração do Firebase
         const FIREBASE_URL = "https://inventario-28d95-default-rtdb.firebaseio.com/";
         const COMPUTADORES_PATH = "computadores";
 
         let editMode = false;
         let currentEditId = null;
 
-        // Elementos do DOM
         const form = document.getElementById('computerForm');
         const computersListDiv = document.getElementById('computersList');
         const formTitle = document.getElementById('formTitle');
@@ -671,12 +747,24 @@
         const submitBtn = document.getElementById('submitBtn');
         const cancelBtn = document.getElementById('cancelBtn');
 
-        // Função para gerar ID único
+        // Navegação por Tabs
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
         function generateId() {
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
-        // Função para fazer requisições fetch
         async function fetchAPI(url, options = {}) {
             try {
                 const response = await fetch(url, {
@@ -703,7 +791,6 @@
             }
         }
 
-        // Função para salvar/atualizar computador
         async function saveComputer(event) {
             event.preventDefault();
             
@@ -750,13 +837,13 @@
                     resetForm();
                 }
                 loadComputers();
+                updateDashboard();
             } catch (error) {
                 console.error('Erro ao salvar:', error);
                 alert('❌ Erro ao salvar o computador. Verifique sua conexão: ' + error.message);
             }
         }
 
-        // Função para carregar todos os computadores
         async function loadComputers() {
             computersListDiv.innerHTML = '<div class="loading">🔄 Carregando equipamentos...</div>';
             
@@ -781,20 +868,19 @@
                 });
 
                 renderResponsiveView(computersArray);
+                updateDashboard();
             } catch (error) {
                 console.error('Erro ao carregar:', error);
                 computersListDiv.innerHTML = '<div class="empty-state">❌ Erro ao carregar dados. Verifique sua conexão com o Firebase.</div>';
             }
         }
 
-        // Função para renderizar visual responsivo
         function renderResponsiveView(computers) {
             const isMobile = window.innerWidth < 768;
             
             if (isMobile) {
-                // Visual em cards para mobile
                 const cardsHtml = `
-                    <div class="cards-container mobile-cards">
+                    <div class="cards-container">
                         ${computers.map(computer => `
                             <div class="computer-card">
                                 <div class="card-header">
@@ -807,89 +893,44 @@
                                     </div>
                                 </div>
                                 <div class="card-content">
-                                    <div class="card-info">
-                                        <span>👤</span>
-                                        <span>${escapeHtml(computer.usuario)}</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>🖥️</span>
-                                        <span>${escapeHtml(computer.cpu)}</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>🎮</span>
-                                        <span>${escapeHtml(computer.gpu)}</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>💿</span>
-                                        <span>${escapeHtml(computer.sistema)} v${escapeHtml(computer.versao)}</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>💾</span>
-                                        <span>RAM: ${computer.ram}GB</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>📦</span>
-                                        <span>${computer.tipo === 'notebook' ? '💻 Notebook' : '🖥️ Desktop'}</span>
-                                    </div>
-                                    <div class="card-info">
-                                        <span>💾</span>
-                                        <span>Backup: ${computer.possuiBackup ? '✅ Sim' : '❌ Não'}</span>
-                                    </div>
+                                    <div class="card-info"><span>👤</span><span>${escapeHtml(computer.usuario)}</span></div>
+                                    <div class="card-info"><span>🖥️</span><span>${escapeHtml(computer.cpu)}</span></div>
+                                    <div class="card-info"><span>🎮</span><span>${escapeHtml(computer.gpu)}</span></div>
+                                    <div class="card-info"><span>💿</span><span>${escapeHtml(computer.sistema)}</span></div>
+                                    <div class="card-info"><span>💾</span><span>RAM: ${computer.ram}GB</span></div>
+                                    <div class="card-info"><span>📦</span><span>${computer.tipo === 'notebook' ? '💻 Notebook' : '🖥️ Desktop'}</span></div>
                                 </div>
                                 <div class="card-actions">
-                                    <button onclick="editComputer('${computer.id}')" class="btn-warning btn-icon">✏️ Editar</button>
-                                    <button onclick="deleteComputer('${computer.id}')" class="btn-danger btn-icon">🗑️ Excluir</button>
-                                    <button onclick="viewDetails('${computer.id}')" class="btn-secondary btn-icon">📋 Detalhes</button>
+                                    <button onclick="editComputer('${computer.id}')" class="btn-warning btn-icon">✏️</button>
+                                    <button onclick="deleteComputer('${computer.id}')" class="btn-danger btn-icon">🗑️</button>
+                                    <button onclick="viewDetails('${computer.id}')" class="btn-secondary btn-icon">📋</button>
                                 </div>
                             </div>
                         `).join('')}
                     </div>
-                    <div class="desktop-table">
-                        ${renderTable(computers)}
-                    </div>
+                    <div class="desktop-table">${renderTable(computers)}</div>
                 `;
                 computersListDiv.innerHTML = cardsHtml;
             } else {
-                // Visual em tabela para desktop
                 computersListDiv.innerHTML = renderTable(computers);
             }
         }
 
-        // Função para renderizar tabela
         function renderTable(computers) {
             return `
                 <div class="desktop-table">
                     <table>
                         <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Usuário</th>
-                                <th>CPU</th>
-                                <th>GPU</th>
-                                <th>Sistema</th>
-                                <th>Tipo</th>
-                                <th>Backup</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
+                            <tr><th>Nome</th><th>Usuário</th><th>CPU</th><th>GPU</th><th>Sistema</th><th>Tipo</th><th>Backup</th><th>Status</th><th>Ações</th></tr>
                         </thead>
                         <tbody>
                             ${computers.map(computer => `
                                 <tr>
-                                    <td>
-                                        <strong>${escapeHtml(computer.nome)}</strong><br>
-                                        <small style="color:#8080a0">🔢 ${escapeHtml(computer.numeroSerie)}</small>
-                                    </td>
+                                    <td><strong>${escapeHtml(computer.nome)}</strong><br><small style="color:#8080a0">🔢 ${escapeHtml(computer.numeroSerie)}</small></td>
                                     <td>👤 ${escapeHtml(computer.usuario)}</td>
-                                    <td>
-                                        🖥️ ${escapeHtml(computer.cpu)}<br>
-                                        <small>💾 RAM: ${computer.ram}GB</small>
-                                    </td>
+                                    <td>🖥️ ${escapeHtml(computer.cpu)}<br><small>💾 RAM: ${computer.ram}GB</small></td>
                                     <td>🎮 ${escapeHtml(computer.gpu)}</td>
-                                    <td>
-                                        💿 ${escapeHtml(computer.sistema)}<br>
-                                        <small>📌 v${escapeHtml(computer.versao)}</small>
-                                    </td>
+                                    <td>💿 ${escapeHtml(computer.sistema)}<br><small>📌 v${escapeHtml(computer.versao)}</small></td>
                                     <td><span class="badge ${computer.tipo === 'notebook' ? 'badge-success' : 'badge-secondary'}">${computer.tipo === 'notebook' ? '💻 Notebook' : '🖥️ Desktop'}</span></td>
                                     <td>${computer.possuiBackup ? '✅ Sim' : '❌ Não'}</td>
                                     <td>${getStatusBadge(computer.status)}</td>
@@ -906,17 +947,72 @@
             `;
         }
 
-        // Função para obter badge de status
+        function updateDashboard() {
+            fetchAPI(`${FIREBASE_URL}${COMPUTADORES_PATH}.json`).then(computers => {
+                if (!computers) {
+                    document.getElementById('totalEquipamentos').textContent = '0';
+                    document.getElementById('totalNotebooks').textContent = '0';
+                    document.getElementById('totalDesktops').textContent = '0';
+                    document.getElementById('totalBackup').textContent = '0';
+                    document.getElementById('statusDistribution').innerHTML = '<div class="empty-state">Nenhum dado disponível</div>';
+                    document.getElementById('quickSummary').innerHTML = '<div class="empty-state">Nenhum dado disponível</div>';
+                    return;
+                }
+
+                const computersArray = Object.values(computers);
+                const total = computersArray.length;
+                const notebooks = computersArray.filter(c => c.tipo === 'notebook').length;
+                const desktops = computersArray.filter(c => c.tipo === 'desktop').length;
+                const backup = computersArray.filter(c => c.possuiBackup === true).length;
+                const ativos = computersArray.filter(c => c.status === 'ativo').length;
+                const manutencao = computersArray.filter(c => c.status === 'manutencao').length;
+                const inativos = computersArray.filter(c => c.status === 'inativo').length;
+
+                document.getElementById('totalEquipamentos').textContent = total;
+                document.getElementById('totalNotebooks').textContent = notebooks;
+                document.getElementById('totalDesktops').textContent = desktops;
+                document.getElementById('totalBackup').textContent = backup;
+
+                const statusColors = {
+                    ativo: '#28a745',
+                    manutencao: '#ffc107',
+                    inativo: '#dc3545'
+                };
+
+                document.getElementById('statusDistribution').innerHTML = `
+                    <div class="status-item"><div class="status-count" style="color: ${statusColors.ativo}">${ativos}</div>
+                    <div class="status-label">🟢 Ativos</div><div class="progress-bar"><div class="progress-fill" style="width: ${(ativos/total)*100}%; background: ${statusColors.ativo}"></div></div></div>
+                    <div class="status-item"><div class="status-count" style="color: ${statusColors.manutencao}">${manutencao}</div>
+                    <div class="status-label">🔧 Em Manutenção</div><div class="progress-bar"><div class="progress-fill" style="width: ${(manutencao/total)*100}%; background: ${statusColors.manutencao}"></div></div></div>
+                    <div class="status-item"><div class="status-count" style="color: ${statusColors.inativo}">${inativos}</div>
+                    <div class="status-label">🔴 Inativos</div><div class="progress-bar"><div class="progress-fill" style="width: ${(inativos/total)*100}%; background: ${statusColors.inativo}"></div></div></div>
+                `;
+
+                document.getElementById('quickSummary').innerHTML = `
+                    <div style="display: grid; gap: 10px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                            <span>✅ Taxa de Ativos:</span><strong>${Math.round((ativos/total)*100)}%</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                            <span>💾 Cobertura de Backup:</span><strong>${Math.round((backup/total)*100)}%</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                            <span>💻 Proporção Notebook/Desktop:</span><strong>${notebooks}/${desktops}</strong>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         function getStatusBadge(status) {
             const statusMap = {
-                'ativo': '<span class="status-badge" style="background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.3);">🟢 Ativo</span>',
-                'manutencao': '<span class="status-badge" style="background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">🔧 Manutenção</span>',
-                'inativo': '<span class="status-badge" style="background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3);">🔴 Inativo</span>'
+                'ativo': '<span class="status-badge" style="background: rgba(40, 167, 69, 0.2); color: #28a745;">🟢 Ativo</span>',
+                'manutencao': '<span class="status-badge" style="background: rgba(255, 193, 7, 0.2); color: #ffc107;">🔧 Manutenção</span>',
+                'inativo': '<span class="status-badge" style="background: rgba(220, 53, 69, 0.2); color: #dc3545;">🔴 Inativo</span>'
             };
             return statusMap[status] || statusMap['ativo'];
         }
 
-        // Função para editar computador
         window.editComputer = async function(id) {
             try {
                 const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
@@ -946,6 +1042,7 @@
                     submitBtn.innerHTML = '<span>💾</span> Atualizar Computador';
                     cancelBtn.style.display = 'inline-block';
                     
+                    document.querySelector('[data-tab="cadastro"]').click();
                     document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
                 }
             } catch (error) {
@@ -954,7 +1051,6 @@
             }
         };
 
-        // Função para visualizar detalhes
         window.viewDetails = async function(id) {
             try {
                 const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
@@ -974,8 +1070,7 @@
                         `💽 Armazenamento: ${computer.armazenamento}\n` +
                         `📅 Data Aquisição: ${computer.dataAquisicao}\n` +
                         `📊 Status: ${computer.status}\n` +
-                        `📝 Observações: ${computer.observacoes}\n` +
-                        `🕒 Última atualização: ${computer.ultimaAtualizacao ? new Date(computer.ultimaAtualizacao).toLocaleString('pt-BR') : 'Não informada'}`;
+                        `📝 Observações: ${computer.observacoes}`;
                     alert(details);
                 }
             } catch (error) {
@@ -984,17 +1079,15 @@
             }
         };
 
-        // Função para excluir computador
         window.deleteComputer = async function(id) {
-            if (confirm('⚠️ Tem certeza que deseja excluir este computador? Esta ação não pode ser desfeita.')) {
+            if (confirm('⚠️ Tem certeza que deseja excluir este computador?')) {
                 try {
                     const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
                     await fetchAPI(url, { method: 'DELETE' });
                     alert('✅ Computador excluído com sucesso!');
-                    if (editMode && currentEditId === id) {
-                        resetForm();
-                    }
+                    if (editMode && currentEditId === id) resetForm();
                     loadComputers();
+                    updateDashboard();
                 } catch (error) {
                     console.error('Erro ao excluir:', error);
                     alert('❌ Erro ao excluir o computador: ' + error.message);
@@ -1002,7 +1095,6 @@
             }
         };
 
-        // Função para resetar formulário
         function resetForm() {
             form.reset();
             editMode = false;
@@ -1015,7 +1107,6 @@
             document.getElementById('tipo').value = 'desktop';
         }
 
-        // Função para escapar HTML
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -1023,16 +1114,8 @@
             return div.innerHTML;
         }
 
-        // Listener para redimensionamento da janela
-        window.addEventListener('resize', () => {
-            loadComputers();
-        });
-
-        // Event listeners
         form.addEventListener('submit', saveComputer);
         cancelBtn.addEventListener('click', resetForm);
-
-        // Inicializar
         loadComputers();
     </script>
 </body>
