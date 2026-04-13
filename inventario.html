@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sistema de Gerenciamento de TI - Inventário de Computadores</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            padding: 12px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(18, 18, 32, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        h1 i {
+            font-size: 1.5rem;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #667eea;
+        }
+
+        .subtitle {
+            color: #a0a0c0;
+            font-size: 0.8rem;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        /* Formulário */
+        .form-section {
+            background: rgba(30, 30, 50, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #b0b0d0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 12px;
+            background: rgba(20, 20, 35, 0.8);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            color: #e0e0e0;
+            transition: all 0.3s;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(20, 20, 35, 1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #606080;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+            flex-shrink: 0;
+        }
+
+        /* Botões */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-direction: column;
+        }
+
+        button {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(108, 117, 125, 0.3);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(108, 117, 125, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            color: #1a1a2e;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-icon {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Cards para mobile */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .computer-card {
+            background: rgba(30, 30, 50, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .computer-card:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .card-title {
+            flex: 1;
+        }
+
+        .card-title h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-bottom: 4px;
+        }
+
+        .card-title .serial {
+            font-size: 0.7rem;
+            color: #8080a0;
+        }
+
+        .card-status {
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #b0b0d0;
+        }
+
+        .card-info span:first-child {
+            font-size: 0.9rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .card-actions button {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.75rem;
+        }
+
+        /* Tabela para desktop */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 16px;
+            background: rgba(30, 30, 50, 0.4);
+        }
+
+        .table-container h2 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-table {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            backdrop-filter: blur(5px);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #b0b0d0;
+        }
+
+        td {
+            font-size: 0.8rem;
+            color: #d0d0e0;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .badge-success {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .badge-secondary {
+            background: rgba(108, 117, 125, 0.2);
+            color: #adb5bd;
+            border: 1px solid rgba(108, 117, 125, 0.3);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Loading e Empty State */
+        .loading, .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+
+        .empty-state {
+            color: #8080a0;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 30, 50, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-section {
+                padding: 24px;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .button-group {
+                flex-direction: row;
+            }
+
+            button {
+                width: auto;
+                padding: 12px 28px;
+            }
+
+            .mobile-cards {
+                display: none;
+            }
+
+            .desktop-table {
+                display: block;
+            }
+
+            .card-actions button {
+                width: auto;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .desktop-table {
+                display: none;
+            }
+            
+            .mobile-cards {
+                display: block;
+            }
+            
+            .table-container {
+                overflow: visible;
+            }
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Estilo para inputs number */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+
+        /* Focus visible para acessibilidade */
+        *:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        /* Melhorias para touch */
+        @media (hover: none) and (pointer: coarse) {
+            button {
+                min-height: 44px;
+            }
+            
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>💻</span>
+                Sistema de Gerenciamento de TI
+            </h1>
+            <div class="subtitle">Inventário de Computadores - Controle completo de equipamentos</div>
+        </div>
+
+        <!-- Formulário de Cadastro/Edição -->
+        <div class="form-section">
+            <h2>
+                <span id="formIcon">➕</span>
+                <span id="formTitle">Adicionar Computador</span>
+            </h2>
+            <form id="computerForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nome do Equipamento *</label>
+                        <input type="text" id="nome" required placeholder="Ex: PC-01 - Financeiro">
+                    </div>
+                    <div class="form-group">
+                        <label>Usuário Responsável *</label>
+                        <input type="text" id="usuario" required placeholder="Nome do usuário">
+                    </div>
+                    <div class="form-group">
+                        <label>CPU / Processador *</label>
+                        <input type="text" id="cpu" required placeholder="Ex: Intel i7-10700">
+                    </div>
+                    <div class="form-group">
+                        <label>GPU / Placa de Vídeo</label>
+                        <input type="text" id="gpu" placeholder="Ex: NVIDIA GTX 1660">
+                    </div>
+                    <div class="form-group">
+                        <label>Sistema Operacional *</label>
+                        <input type="text" id="sistema" required placeholder="Ex: Windows 11 Pro">
+                    </div>
+                    <div class="form-group">
+                        <label>Versão do SO</label>
+                        <input type="text" id="versao" placeholder="Ex: 22H2">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo *</label>
+                        <select id="tipo" required>
+                            <option value="desktop">🖥️ Desktop</option>
+                            <option value="notebook">💻 Notebook</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="possuiBackup">
+                        <label>💾 Possui Backup Ativo?</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de Série</label>
+                        <input type="text" id="numeroSerie" placeholder="Número de série do equipamento">
+                    </div>
+                    <div class="form-group">
+                        <label>Memória RAM (GB)</label>
+                        <input type="number" id="ram" placeholder="Ex: 16">
+                    </div>
+                    <div class="form-group">
+                        <label>Armazenamento</label>
+                        <input type="text" id="armazenamento" placeholder="Ex: 512GB SSD">
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Aquisição</label>
+                        <input type="date" id="dataAquisicao">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="status">
+                            <option value="ativo">🟢 Ativo</option>
+                            <option value="manutencao">🔧 Em Manutenção</option>
+                            <option value="inativo">🔴 Inativo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Observações</label>
+                        <textarea id="observacoes" placeholder="Informações adicionais..."></textarea>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span>💾</span> Salvar Computador
+                    </button>
+                    <button type="button" class="btn-secondary" id="cancelBtn" style="display: none;">
+                        <span>❌</span> Cancelar Edição
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Computadores -->
+        <div class="table-container">
+            <h2>
+                <span>📋</span>
+                Lista de Equipamentos
+            </h2>
+            <div id="computersList">
+                <div class="loading">🔄 Carregando equipamentos...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração do Firebase
+        const FIREBASE_URL = "https://inventario-28d95-default-rtdb.firebaseio.com/";
+        const COMPUTADORES_PATH = "computadores";
+
+        let editMode = false;
+        let currentEditId = null;
+
+        // Elementos do DOM
+        const form = document.getElementById('computerForm');
+        const computersListDiv = document.getElementById('computersList');
+        const formTitle = document.getElementById('formTitle');
+        const formIcon = document.getElementById('formIcon');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        // Função para gerar ID único
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // Função para fazer requisições fetch
+        async function fetchAPI(url, options = {}) {
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                if (options.method === 'DELETE') {
+                    return true;
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
+            }
+        }
+
+        // Função para salvar/atualizar computador
+        async function saveComputer(event) {
+            event.preventDefault();
+            
+            const computerData = {
+                nome: document.getElementById('nome').value,
+                usuario: document.getElementById('usuario').value,
+                cpu: document.getElementById('cpu').value,
+                gpu: document.getElementById('gpu').value || 'Não especificado',
+                sistema: document.getElementById('sistema').value,
+                versao: document.getElementById('versao').value || 'Não especificado',
+                tipo: document.getElementById('tipo').value,
+                possuiBackup: document.getElementById('possuiBackup').checked,
+                numeroSerie: document.getElementById('numeroSerie').value || 'Não informado',
+                ram: document.getElementById('ram').value || 'Não informado',
+                armazenamento: document.getElementById('armazenamento').value || 'Não informado',
+                dataAquisicao: document.getElementById('dataAquisicao').value || 'Não informada',
+                status: document.getElementById('status').value,
+                observacoes: document.getElementById('observacoes').value || 'Sem observações',
+                ultimaAtualizacao: new Date().toISOString()
+            };
+
+            if (!computerData.nome || !computerData.usuario || !computerData.cpu || !computerData.sistema) {
+                alert('⚠️ Por favor, preencha todos os campos obrigatórios (*)');
+                return;
+            }
+
+            try {
+                if (editMode && currentEditId) {
+                    const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${currentEditId}.json`;
+                    await fetchAPI(url, {
+                        method: 'PUT',
+                        body: JSON.stringify(computerData)
+                    });
+                    alert('✅ Computador atualizado com sucesso!');
+                    resetForm();
+                } else {
+                    const newId = generateId();
+                    const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${newId}.json`;
+                    await fetchAPI(url, {
+                        method: 'PUT',
+                        body: JSON.stringify(computerData)
+                    });
+                    alert('✅ Computador adicionado com sucesso!');
+                    resetForm();
+                }
+                loadComputers();
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                alert('❌ Erro ao salvar o computador. Verifique sua conexão: ' + error.message);
+            }
+        }
+
+        // Função para carregar todos os computadores
+        async function loadComputers() {
+            computersListDiv.innerHTML = '<div class="loading">🔄 Carregando equipamentos...</div>';
+            
+            try {
+                const url = `${FIREBASE_URL}${COMPUTADORES_PATH}.json`;
+                const computers = await fetchAPI(url);
+                
+                if (!computers) {
+                    computersListDiv.innerHTML = '<div class="empty-state">📭 Nenhum computador cadastrado. Adicione o primeiro!</div>';
+                    return;
+                }
+
+                const computersArray = Object.entries(computers).map(([id, data]) => ({
+                    id,
+                    ...data
+                }));
+
+                computersArray.sort((a, b) => {
+                    if (!a.ultimaAtualizacao) return 1;
+                    if (!b.ultimaAtualizacao) return -1;
+                    return new Date(b.ultimaAtualizacao) - new Date(a.ultimaAtualizacao);
+                });
+
+                renderResponsiveView(computersArray);
+            } catch (error) {
+                console.error('Erro ao carregar:', error);
+                computersListDiv.innerHTML = '<div class="empty-state">❌ Erro ao carregar dados. Verifique sua conexão com o Firebase.</div>';
+            }
+        }
+
+        // Função para renderizar visual responsivo
+        function renderResponsiveView(computers) {
+            const isMobile = window.innerWidth < 768;
+            
+            if (isMobile) {
+                // Visual em cards para mobile
+                const cardsHtml = `
+                    <div class="cards-container mobile-cards">
+                        ${computers.map(computer => `
+                            <div class="computer-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3>${escapeHtml(computer.nome)}</h3>
+                                        <div class="serial">🔢 ${escapeHtml(computer.numeroSerie)}</div>
+                                    </div>
+                                    <div class="card-status">
+                                        ${getStatusBadge(computer.status)}
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-info">
+                                        <span>👤</span>
+                                        <span>${escapeHtml(computer.usuario)}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>🖥️</span>
+                                        <span>${escapeHtml(computer.cpu)}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>🎮</span>
+                                        <span>${escapeHtml(computer.gpu)}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>💿</span>
+                                        <span>${escapeHtml(computer.sistema)} v${escapeHtml(computer.versao)}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>💾</span>
+                                        <span>RAM: ${computer.ram}GB</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>📦</span>
+                                        <span>${computer.tipo === 'notebook' ? '💻 Notebook' : '🖥️ Desktop'}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <span>💾</span>
+                                        <span>Backup: ${computer.possuiBackup ? '✅ Sim' : '❌ Não'}</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button onclick="editComputer('${computer.id}')" class="btn-warning btn-icon">✏️ Editar</button>
+                                    <button onclick="deleteComputer('${computer.id}')" class="btn-danger btn-icon">🗑️ Excluir</button>
+                                    <button onclick="viewDetails('${computer.id}')" class="btn-secondary btn-icon">📋 Detalhes</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="desktop-table">
+                        ${renderTable(computers)}
+                    </div>
+                `;
+                computersListDiv.innerHTML = cardsHtml;
+            } else {
+                // Visual em tabela para desktop
+                computersListDiv.innerHTML = renderTable(computers);
+            }
+        }
+
+        // Função para renderizar tabela
+        function renderTable(computers) {
+            return `
+                <div class="desktop-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Usuário</th>
+                                <th>CPU</th>
+                                <th>GPU</th>
+                                <th>Sistema</th>
+                                <th>Tipo</th>
+                                <th>Backup</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${computers.map(computer => `
+                                <tr>
+                                    <td>
+                                        <strong>${escapeHtml(computer.nome)}</strong><br>
+                                        <small style="color:#8080a0">🔢 ${escapeHtml(computer.numeroSerie)}</small>
+                                    </td>
+                                    <td>👤 ${escapeHtml(computer.usuario)}</td>
+                                    <td>
+                                        🖥️ ${escapeHtml(computer.cpu)}<br>
+                                        <small>💾 RAM: ${computer.ram}GB</small>
+                                    </td>
+                                    <td>🎮 ${escapeHtml(computer.gpu)}</td>
+                                    <td>
+                                        💿 ${escapeHtml(computer.sistema)}<br>
+                                        <small>📌 v${escapeHtml(computer.versao)}</small>
+                                    </td>
+                                    <td><span class="badge ${computer.tipo === 'notebook' ? 'badge-success' : 'badge-secondary'}">${computer.tipo === 'notebook' ? '💻 Notebook' : '🖥️ Desktop'}</span></td>
+                                    <td>${computer.possuiBackup ? '✅ Sim' : '❌ Não'}</td>
+                                    <td>${getStatusBadge(computer.status)}</td>
+                                    <td class="action-buttons">
+                                        <button onclick="editComputer('${computer.id}')" class="btn-warning btn-icon">✏️ Editar</button>
+                                        <button onclick="deleteComputer('${computer.id}')" class="btn-danger btn-icon">🗑️ Excluir</button>
+                                        <button onclick="viewDetails('${computer.id}')" class="btn-secondary btn-icon">📋 Detalhes</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Função para obter badge de status
+        function getStatusBadge(status) {
+            const statusMap = {
+                'ativo': '<span class="status-badge" style="background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.3);">🟢 Ativo</span>',
+                'manutencao': '<span class="status-badge" style="background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">🔧 Manutenção</span>',
+                'inativo': '<span class="status-badge" style="background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3);">🔴 Inativo</span>'
+            };
+            return statusMap[status] || statusMap['ativo'];
+        }
+
+        // Função para editar computador
+        window.editComputer = async function(id) {
+            try {
+                const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
+                const computer = await fetchAPI(url);
+                
+                if (computer) {
+                    editMode = true;
+                    currentEditId = id;
+                    
+                    document.getElementById('nome').value = computer.nome || '';
+                    document.getElementById('usuario').value = computer.usuario || '';
+                    document.getElementById('cpu').value = computer.cpu || '';
+                    document.getElementById('gpu').value = computer.gpu || '';
+                    document.getElementById('sistema').value = computer.sistema || '';
+                    document.getElementById('versao').value = computer.versao || '';
+                    document.getElementById('tipo').value = computer.tipo || 'desktop';
+                    document.getElementById('possuiBackup').checked = computer.possuiBackup || false;
+                    document.getElementById('numeroSerie').value = computer.numeroSerie || '';
+                    document.getElementById('ram').value = computer.ram || '';
+                    document.getElementById('armazenamento').value = computer.armazenamento || '';
+                    document.getElementById('dataAquisicao').value = computer.dataAquisicao || '';
+                    document.getElementById('status').value = computer.status || 'ativo';
+                    document.getElementById('observacoes').value = computer.observacoes || '';
+                    
+                    formTitle.innerHTML = 'Editar Computador';
+                    formIcon.innerHTML = '✏️';
+                    submitBtn.innerHTML = '<span>💾</span> Atualizar Computador';
+                    cancelBtn.style.display = 'inline-block';
+                    
+                    document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar para edição:', error);
+                alert('❌ Erro ao carregar os dados do computador: ' + error.message);
+            }
+        };
+
+        // Função para visualizar detalhes
+        window.viewDetails = async function(id) {
+            try {
+                const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
+                const computer = await fetchAPI(url);
+                
+                if (computer) {
+                    const details = `🔍 DETALHES DO EQUIPAMENTO\n\n` +
+                        `📌 Nome: ${computer.nome}\n` +
+                        `👤 Usuário: ${computer.usuario}\n` +
+                        `🖥️ CPU: ${computer.cpu}\n` +
+                        `🎮 GPU: ${computer.gpu}\n` +
+                        `💿 Sistema: ${computer.sistema} (${computer.versao})\n` +
+                        `💻 Tipo: ${computer.tipo === 'notebook' ? 'Notebook' : 'Desktop'}\n` +
+                        `💾 Backup: ${computer.possuiBackup ? 'Sim' : 'Não'}\n` +
+                        `🔢 Nº Série: ${computer.numeroSerie}\n` +
+                        `💾 RAM: ${computer.ram} GB\n` +
+                        `💽 Armazenamento: ${computer.armazenamento}\n` +
+                        `📅 Data Aquisição: ${computer.dataAquisicao}\n` +
+                        `📊 Status: ${computer.status}\n` +
+                        `📝 Observações: ${computer.observacoes}\n` +
+                        `🕒 Última atualização: ${computer.ultimaAtualizacao ? new Date(computer.ultimaAtualizacao).toLocaleString('pt-BR') : 'Não informada'}`;
+                    alert(details);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar detalhes:', error);
+                alert('❌ Erro ao carregar os detalhes do computador: ' + error.message);
+            }
+        };
+
+        // Função para excluir computador
+        window.deleteComputer = async function(id) {
+            if (confirm('⚠️ Tem certeza que deseja excluir este computador? Esta ação não pode ser desfeita.')) {
+                try {
+                    const url = `${FIREBASE_URL}${COMPUTADORES_PATH}/${id}.json`;
+                    await fetchAPI(url, { method: 'DELETE' });
+                    alert('✅ Computador excluído com sucesso!');
+                    if (editMode && currentEditId === id) {
+                        resetForm();
+                    }
+                    loadComputers();
+                } catch (error) {
+                    console.error('Erro ao excluir:', error);
+                    alert('❌ Erro ao excluir o computador: ' + error.message);
+                }
+            }
+        };
+
+        // Função para resetar formulário
+        function resetForm() {
+            form.reset();
+            editMode = false;
+            currentEditId = null;
+            formTitle.innerHTML = 'Adicionar Computador';
+            formIcon.innerHTML = '➕';
+            submitBtn.innerHTML = '<span>💾</span> Salvar Computador';
+            cancelBtn.style.display = 'none';
+            document.getElementById('status').value = 'ativo';
+            document.getElementById('tipo').value = 'desktop';
+        }
+
+        // Função para escapar HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Listener para redimensionamento da janela
+        window.addEventListener('resize', () => {
+            loadComputers();
+        });
+
+        // Event listeners
+        form.addEventListener('submit', saveComputer);
+        cancelBtn.addEventListener('click', resetForm);
+
+        // Inicializar
+        loadComputers();
+    </script>
+</body>
+</html>
